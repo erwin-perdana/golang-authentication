@@ -54,6 +54,8 @@ func Buy(c *gin.Context) {
 		return
 	}
 
+	CreateHistory(c, "Buy", 0)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Success create transaction",
 	})

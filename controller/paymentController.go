@@ -57,6 +57,8 @@ func Pay(c *gin.Context) {
 		return
 	}
 
+	CreateHistory(c, "Pay", 0)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Success create payment",
 	})

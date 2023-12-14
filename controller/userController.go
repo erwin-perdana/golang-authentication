@@ -11,7 +11,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func Signup(c *gin.Context) {
+func Register(c *gin.Context) {
 	var body struct {
 		Email string
 		Password string
@@ -103,6 +103,8 @@ func Login(c *gin.Context) {
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
 
+	CreateHistory(c, "Login", user.ID)
+
 	c.JSON(http.StatusOK, gin.H{
 		"token": tokenString,
 	})
@@ -116,6 +118,8 @@ func Logout(c *gin.Context) {
 		})
 		return
 	}
+
+	CreateHistory(c, "Logout", 0)
 	
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", "", -1, "", "", false, true)
